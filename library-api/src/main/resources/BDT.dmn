@@ -27,6 +27,9 @@
     <dmn:itemComponent id="_7899544D-D4BF-43E1-BB0C-61E13BBB14B2" name="id" isCollection="false">
       <dmn:typeRef>string</dmn:typeRef>
     </dmn:itemComponent>
+    <dmn:itemComponent id="_1D39B4A8-5079-44C9-BCE1-E58D5C8FB677" name="citizenshipStatus" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_63571AF5-6B52-436F-9BED-0A9A14CE87A4" name="tPersonList" isCollection="true">
     <dmn:typeRef>tPerson</dmn:typeRef>
