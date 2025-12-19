@@ -30,6 +30,9 @@
     <dmn:itemComponent id="_1D39B4A8-5079-44C9-BCE1-E58D5C8FB677" name="citizenshipStatus" isCollection="false">
       <dmn:typeRef>string</dmn:typeRef>
     </dmn:itemComponent>
+    <dmn:itemComponent id="_8F23A5C9-6D8E-4B1A-9F7C-3A9B2E5D4F6A" name="isBlindOrDisabled" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_63571AF5-6B52-436F-9BED-0A9A14CE87A4" name="tPersonList" isCollection="true">
     <dmn:typeRef>tPerson</dmn:typeRef>

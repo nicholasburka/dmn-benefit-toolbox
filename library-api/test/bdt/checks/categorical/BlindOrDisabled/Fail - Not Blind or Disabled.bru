@@ -1,0 +1,37 @@
+meta {
+  name: Fail - Not Blind or Disabled
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/checks/categorical/blind-or-disabled
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "isBlindOrDisabled": false
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

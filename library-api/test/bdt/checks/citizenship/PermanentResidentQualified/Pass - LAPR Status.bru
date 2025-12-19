@@ -1,0 +1,37 @@
+meta {
+  name: Pass - LAPR Status
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/checks/citizenship/permanent-resident-qualified
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "LAPR"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

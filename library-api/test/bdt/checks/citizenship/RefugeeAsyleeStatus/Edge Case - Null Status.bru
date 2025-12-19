@@ -1,0 +1,36 @@
+meta {
+  name: Edge Case - Null Status
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/checks/citizenship/refugee-asylee-status
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

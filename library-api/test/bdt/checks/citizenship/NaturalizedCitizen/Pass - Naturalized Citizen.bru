@@ -1,0 +1,37 @@
+meta {
+  name: Pass - Naturalized Citizen
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/checks/citizenship/naturalized-citizen
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "NATURALIZED_CITIZEN"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

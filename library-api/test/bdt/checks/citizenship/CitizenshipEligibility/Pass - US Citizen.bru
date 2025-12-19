@@ -1,0 +1,34 @@
+meta {
+  name: Pass - US Citizen
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/checks/citizenship/citizenship-eligibility
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "situation": {
+      "primaryPersonId": "person1",
+      "people": [
+        {
+          "id": "person1",
+          "dateOfBirth": "1960-01-01",
+          "citizenshipStatus": "US_CITIZEN"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "person1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}

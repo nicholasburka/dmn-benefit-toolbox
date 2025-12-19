@@ -1,0 +1,39 @@
+meta {
+  name: Pass - Blind or Disabled
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/checks/categorical/categorical-eligibility
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "dateOfBirth": "1995-01-01",
+          "isBlindOrDisabled": true
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1",
+      "asOfDate": "2025-12-18"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
