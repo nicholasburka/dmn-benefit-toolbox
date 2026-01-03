@@ -1,0 +1,44 @@
+meta {
+  name: Pass - Disabled Refugee Within 7 Years
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/benefits/federal/ssi-eligibility
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "primaryPersonId": "p1",
+      "people": [
+        {
+          "id": "p1",
+          "dateOfBirth": "1990-03-20",
+          "citizenshipStatus": "REFUGEE",
+          "refugeeAdmissionDate": "2020-06-15",
+          "isBlindOrDisabled": true
+        }
+      ],
+      "enrollments": [],
+      "relationships": [],
+      "simpleChecks": {}
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checks.categoricalEligible: eq true
+  res.body.checks.citizenshipEligible: eq true
+  res.body.isEligible: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

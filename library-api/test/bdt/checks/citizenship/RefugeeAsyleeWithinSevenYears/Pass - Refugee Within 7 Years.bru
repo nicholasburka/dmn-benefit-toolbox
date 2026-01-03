@@ -1,0 +1,39 @@
+meta {
+  name: Pass - Refugee Within 7 Years
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/checks/citizenship/refugee-asylee-within-seven-years
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "REFUGEE",
+          "refugeeAdmissionDate": "2020-06-15"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

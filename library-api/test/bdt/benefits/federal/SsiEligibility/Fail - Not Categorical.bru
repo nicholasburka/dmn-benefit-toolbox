@@ -1,0 +1,43 @@
+meta {
+  name: Fail - Not Categorical
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/benefits/federal/ssi-eligibility
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "primaryPersonId": "p1",
+      "people": [
+        {
+          "id": "p1",
+          "dateOfBirth": "1990-06-15",
+          "citizenshipStatus": "US_CITIZEN",
+          "isBlindOrDisabled": false
+        }
+      ],
+      "enrollments": [],
+      "relationships": [],
+      "simpleChecks": {}
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checks.categoricalEligible: eq false
+  res.body.checks.citizenshipEligible: eq true
+  res.body.isEligible: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

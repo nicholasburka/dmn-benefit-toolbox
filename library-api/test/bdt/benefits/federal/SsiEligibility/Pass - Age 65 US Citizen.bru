@@ -1,0 +1,43 @@
+meta {
+  name: Pass - Age 65 US Citizen
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/benefits/federal/ssi-eligibility
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "primaryPersonId": "p1",
+      "people": [
+        {
+          "id": "p1",
+          "dateOfBirth": "1955-06-15",
+          "citizenshipStatus": "US_CITIZEN",
+          "isBlindOrDisabled": false
+        }
+      ],
+      "enrollments": [],
+      "relationships": [],
+      "simpleChecks": {}
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checks.categoricalEligible: eq true
+  res.body.checks.citizenshipEligible: eq true
+  res.body.isEligible: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

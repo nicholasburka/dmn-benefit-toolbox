@@ -1,0 +1,39 @@
+meta {
+  name: Edge Case - 6 Years 11 Months
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/checks/citizenship/refugee-asylee-within-seven-years
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "REFUGEE",
+          "refugeeAdmissionDate": "2018-02-01"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

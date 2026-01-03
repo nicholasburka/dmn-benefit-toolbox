@@ -1,0 +1,38 @@
+meta {
+  name: Fail - Not Refugee or Asylee
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{host}}/checks/citizenship/refugee-asylee-within-seven-years
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "US_CITIZEN"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

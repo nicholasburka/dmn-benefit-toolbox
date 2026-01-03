@@ -19,6 +19,9 @@
     <dmn:itemComponent id="_02DAA70A-534A-4529-82DE-DCC9677306C4" name="simpleChecks" isCollection="false">
       <dmn:typeRef>tSimpleChecks</dmn:typeRef>
     </dmn:itemComponent>
+    <dmn:itemComponent id="_3AB15F41-33E0-461C-9569-0BC522587F41" name="evaluationDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
+    </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_47681CD3-2FA0-4694-B03B-F381DA457BD3" name="tPerson" isCollection="false">
     <dmn:itemComponent id="_CAC97D8B-FF24-4C38-8F32-C1507705112D" name="dateOfBirth" isCollection="false">
@@ -32,6 +35,21 @@
     </dmn:itemComponent>
     <dmn:itemComponent id="_8F23A5C9-6D8E-4B1A-9F7C-3A9B2E5D4F6A" name="isBlindOrDisabled" isCollection="false">
       <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_007C0A99-0361-48A3-A52B-4FAECB30663E" name="refugeeAdmissionDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_31B4A7B3-8F80-4935-9937-720279C568AE" name="asylumGrantDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_31A04A0E-5DFD-42B1-B8F7-97BA56FCD078" name="withheldDeportationGrantDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_2F229E87-6FEA-4FB4-BF12-778F21E898F0" name="cubanHaitianEntryDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_B520F043-1947-4E5A-922B-117450F6BAA7" name="amerasianAdmissionDate" isCollection="false">
+      <dmn:typeRef>date</dmn:typeRef>
     </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_63571AF5-6B52-436F-9BED-0A9A14CE87A4" name="tPersonList" isCollection="true">

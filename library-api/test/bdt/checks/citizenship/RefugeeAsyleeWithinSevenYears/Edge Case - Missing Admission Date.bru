@@ -1,0 +1,38 @@
+meta {
+  name: Edge Case - Missing Admission Date
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{host}}/checks/citizenship/refugee-asylee-within-seven-years
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "evaluationDate": "2025-01-01",
+      "people": [
+        {
+          "id": "p1",
+          "citizenshipStatus": "REFUGEE"
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
