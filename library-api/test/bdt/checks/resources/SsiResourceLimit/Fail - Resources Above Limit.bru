@@ -1,0 +1,37 @@
+meta {
+  name: Fail - Resources Above Limit
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/checks/resources/ssi-resource-limit
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "countableResources": 2500
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

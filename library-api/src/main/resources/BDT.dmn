@@ -51,6 +51,12 @@
     <dmn:itemComponent id="_B520F043-1947-4E5A-922B-117450F6BAA7" name="amerasianAdmissionDate" isCollection="false">
       <dmn:typeRef>date</dmn:typeRef>
     </dmn:itemComponent>
+    <dmn:itemComponent id="_5E7A9F2C-8B3D-4E1A-9C6F-2D8B4A7E3C5F" name="residenceState" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_9A8B7C6D-5E4F-3A2B-1C9D-8E7F6A5B4C3D" name="countableResources" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_63571AF5-6B52-436F-9BED-0A9A14CE87A4" name="tPersonList" isCollection="true">
     <dmn:typeRef>tPerson</dmn:typeRef>

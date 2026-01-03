@@ -20,6 +20,7 @@
     "dmn-js": "^17.2.1",
     "fast-xml-parser": "^5.2.5",
     "firebase": "^11.9.1",
+    "groq-sdk": "^0.37.0",
     "lodash.debounce": "^4.0.8",
     "solid-bootstrap": "^1.0.21",
     "solid-js": "^1.9.5",

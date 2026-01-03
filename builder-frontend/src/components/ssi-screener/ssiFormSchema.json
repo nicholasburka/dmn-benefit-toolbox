@@ -1,0 +1,210 @@
+{
+  "type": "default",
+  "id": "Form_SSI_Screener",
+  "schemaVersion": 18,
+  "exporter": {
+    "name": "SSI Screener",
+    "version": "1.0.0"
+  },
+  "components": [
+    {
+      "text": "# SSI Eligibility Screener\n\nAnswer the questions below to check your eligibility for Supplemental Security Income (SSI).",
+      "type": "text",
+      "layout": {
+        "row": "Row_header",
+        "columns": null
+      },
+      "id": "Field_header"
+    },
+    {
+      "label": "Date of Birth",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_dob",
+        "columns": null
+      },
+      "id": "Field_dob",
+      "key": "dateOfBirth",
+      "description": "Enter your date of birth (YYYY-MM-DD)",
+      "validate": {
+        "required": true,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      }
+    },
+    {
+      "label": "Are you blind or disabled?",
+      "type": "yes_no",
+      "layout": {
+        "row": "Row_blind_disabled",
+        "columns": null
+      },
+      "id": "Field_blind_disabled",
+      "key": "isBlindOrDisabled",
+      "description": "SSI is available to individuals who are aged 65 or older, blind, or disabled",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Citizenship or Immigration Status",
+      "type": "select",
+      "layout": {
+        "row": "Row_citizenship",
+        "columns": null
+      },
+      "id": "Field_citizenship",
+      "key": "citizenshipStatus",
+      "description": "Select the option that best describes your current status",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "U.S. Citizen",
+          "value": "US_CITIZEN"
+        },
+        {
+          "label": "Lawful Permanent Resident (LPR)",
+          "value": "LAPR"
+        },
+        {
+          "label": "Refugee",
+          "value": "REFUGEE"
+        },
+        {
+          "label": "Asylee",
+          "value": "ASYLEE"
+        },
+        {
+          "label": "Deportation Withheld",
+          "value": "WITHHOLDING_DEPORTATION"
+        },
+        {
+          "label": "Cuban/Haitian Entrant",
+          "value": "CUBAN_HAITIAN_ENTRANT"
+        },
+        {
+          "label": "Vietnamese Amerasian",
+          "value": "VIETNAMESE_AMERASIAN"
+        },
+        {
+          "label": "Other",
+          "value": "OTHER"
+        }
+      ]
+    },
+    {
+      "label": "State of Residence",
+      "type": "select",
+      "layout": {
+        "row": "Row_residence",
+        "columns": null
+      },
+      "id": "Field_residence",
+      "key": "residenceState",
+      "description": "Select the state or territory where you currently reside",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {"label": "Alabama", "value": "AL"}, {"label": "Alaska", "value": "AK"}, {"label": "Arizona", "value": "AZ"}, {"label": "Arkansas", "value": "AR"}, {"label": "California", "value": "CA"}, {"label": "Colorado", "value": "CO"}, {"label": "Connecticut", "value": "CT"}, {"label": "Delaware", "value": "DE"}, {"label": "District of Columbia", "value": "DC"}, {"label": "Florida", "value": "FL"}, {"label": "Georgia", "value": "GA"}, {"label": "Hawaii", "value": "HI"}, {"label": "Idaho", "value": "ID"}, {"label": "Illinois", "value": "IL"}, {"label": "Indiana", "value": "IN"}, {"label": "Iowa", "value": "IA"}, {"label": "Kansas", "value": "KS"}, {"label": "Kentucky", "value": "KY"}, {"label": "Louisiana", "value": "LA"}, {"label": "Maine", "value": "ME"}, {"label": "Maryland", "value": "MD"}, {"label": "Massachusetts", "value": "MA"}, {"label": "Michigan", "value": "MI"}, {"label": "Minnesota", "value": "MN"}, {"label": "Mississippi", "value": "MS"}, {"label": "Missouri", "value": "MO"}, {"label": "Montana", "value": "MT"}, {"label": "Nebraska", "value": "NE"}, {"label": "Nevada", "value": "NV"}, {"label": "New Hampshire", "value": "NH"}, {"label": "New Jersey", "value": "NJ"}, {"label": "New Mexico", "value": "NM"}, {"label": "New York", "value": "NY"}, {"label": "North Carolina", "value": "NC"}, {"label": "North Dakota", "value": "ND"}, {"label": "Northern Mariana Islands", "value": "MP"}, {"label": "Ohio", "value": "OH"}, {"label": "Oklahoma", "value": "OK"}, {"label": "Oregon", "value": "OR"}, {"label": "Pennsylvania", "value": "PA"}, {"label": "Rhode Island", "value": "RI"}, {"label": "South Carolina", "value": "SC"}, {"label": "South Dakota", "value": "SD"}, {"label": "Tennessee", "value": "TN"}, {"label": "Texas", "value": "TX"}, {"label": "Utah", "value": "UT"}, {"label": "Vermont", "value": "VT"}, {"label": "Virginia", "value": "VA"}, {"label": "Washington", "value": "WA"}, {"label": "West Virginia", "value": "WV"}, {"label": "Wisconsin", "value": "WI"}, {"label": "Wyoming", "value": "WY"}
+      ]
+    },
+    {
+      "label": "Date Admitted as Refugee",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_refugee_date",
+        "columns": null
+      },
+      "id": "Field_refugee_date",
+      "key": "refugeeAdmissionDate",
+      "description": "Enter the date you were admitted to the U.S. as a refugee (YYYY-MM-DD)",
+      "validate": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "conditional": {
+        "hide": "=citizenshipStatus != 'REFUGEE'"
+      }
+    },
+    {
+      "label": "Date Asylum Granted",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_asylum_date",
+        "columns": null
+      },
+      "id": "Field_asylum_date",
+      "key": "asylumGrantDate",
+      "description": "Enter the date your asylum was granted (YYYY-MM-DD)",
+      "validate": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "conditional": {
+        "hide": "=citizenshipStatus != 'ASYLEE'"
+      }
+    },
+    {
+      "label": "Date Deportation Withheld",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_withholding_date",
+        "columns": null
+      },
+      "id": "Field_withholding_date",
+      "key": "withheldDeportationGrantDate",
+      "description": "Enter the date your deportation was withheld (YYYY-MM-DD)",
+      "validate": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "conditional": {
+        "hide": "=citizenshipStatus != 'WITHHOLDING_DEPORTATION'"
+      }
+    },
+    {
+      "label": "Date of Entry to United States",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_cuban_haitian_date",
+        "columns": null
+      },
+      "id": "Field_cuban_haitian_date",
+      "key": "cubanHaitianEntryDate",
+      "description": "Enter the date you entered the United States (YYYY-MM-DD)",
+      "validate": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "conditional": {
+        "hide": "=citizenshipStatus != 'CUBAN_HAITIAN_ENTRANT'"
+      }
+    },
+    {
+      "label": "Date Admitted as Vietnamese Amerasian",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_amerasian_date",
+        "columns": null
+      },
+      "id": "Field_amerasian_date",
+      "key": "amerasianAdmissionDate",
+      "description": "Enter the date you were admitted to the U.S. (YYYY-MM-DD)",
+      "validate": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "conditional": {
+        "hide": "=citizenshipStatus != 'VIETNAMESE_AMERASIAN'"
+      }
+    },
+    {
+      "action": "submit",
+      "label": "Check Eligibility",
+      "type": "button",
+      "layout": {
+        "row": "Row_submit",
+        "columns": null
+      },
+      "id": "Field_submit",
+      "key": "submit"
+    }
+  ]
+}

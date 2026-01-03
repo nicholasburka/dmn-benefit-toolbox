@@ -160,7 +160,7 @@ else
           <dmn:text>if yearsSinceAcquisition != null then
   yearsSinceAcquisition &lt; 7
 else
-  false</dmn:text>
+  null</dmn:text>
         </dmn:literalExpression>
       </dmn:contextEntry>
 

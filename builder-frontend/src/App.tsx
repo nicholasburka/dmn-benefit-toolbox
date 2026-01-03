@@ -6,6 +6,8 @@ import { useAuth } from "./context/AuthContext";
 import HomeScreen from "./components/homeScreen/HomeScreen";
 import EligibilityCheckDetail from "./components/homeScreen/eligibilityCheckList/eligibilityCheckDetail/EligibilityCheckDetail";
 import Screener from "./components/screener/Screener";
+import ConversationalScreener from "./components/ssi-screener/ConversationalScreener";
+import SSIScreener from "./components/ssi-screener/SSIScreener";
 import Loading from "./components/Loading";
 import { Match, Switch } from "solid-js";
 
@@ -37,7 +39,9 @@ function App() {
       <Route path="/" component={() => <ProtectedRoute component={HomeScreen}/>} />
       <Route path="/project/:projectId" component={() => <ProtectedRoute component={Project}/>} />
       <Route path="/check/:checkId" component={() => <ProtectedRoute component={EligibilityCheckDetail}/>} />
-      <Route path="/screener/:publishedScreenerId" component={Screener} />          
+      <Route path="/screener/:publishedScreenerId" component={Screener} />
+      <Route path="/ssi-screener" component={ConversationalScreener} />
+      <Route path="/ssi" component={SSIScreener} />
       <Route path="*" component={() => <div class="p-4">404 - Page Not Found</div>} />
     </>
   );

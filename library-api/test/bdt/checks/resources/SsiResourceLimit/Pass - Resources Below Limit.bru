@@ -1,0 +1,37 @@
+meta {
+  name: Pass - Resources Below Limit
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/checks/resources/ssi-resource-limit
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "countableResources": 1500
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
