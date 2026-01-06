@@ -1,0 +1,46 @@
+{
+  "name": "SsiEligibility - Eligible With Income",
+  "description": "Eligible person with part-time wages, income below limit after exclusions",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1955-06-15",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "CA",
+        "countableResources": 800,
+        "incomeSources": [
+          {
+            "id": "income1",
+            "type": "earned",
+            "category": "wages",
+            "monthlyAmount": 500,
+            "description": "Part-time work",
+            "isInfrequentOrIrregular": false
+          },
+          {
+            "id": "income2",
+            "type": "unearned",
+            "category": "interest",
+            "monthlyAmount": 15,
+            "description": "Bank interest",
+            "isInfrequentOrIrregular": false
+          }
+        ]
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": true,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}

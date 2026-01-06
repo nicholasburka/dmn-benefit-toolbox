@@ -1,0 +1,29 @@
+{
+  "name": "SsiEligibility - Ineligible Citizenship",
+  "description": "Fails citizenship check: not a US citizen or qualified alien",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1951-07-25",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "temporary_visitor",
+        "residenceState": "TX",
+        "countableResources": 500,
+        "incomeSources": []
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": false,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": false,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "SsiEligibility - Edge Case Boundary Age",
+  "description": "Edge case: person just turned 65",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1961-01-04",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "MA",
+        "countableResources": 1000,
+        "incomeSources": []
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": true,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}

@@ -9,7 +9,16 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "derive-inputs": "node bin/derive-inputs.js"
+    "derive-inputs": "node bin/derive-inputs.js",
+    "generate-personas": "node bin/generate-personas.js",
+    "test-personas": "node bin/test-personas.js",
+    "generate-form": "node bin/generate-form.js",
+    "validate-form": "node bin/validate-form.js",
+    "generate-docs": "node bin/generate-docs.js",
+    "workflow": "node bin/workflow-all.js",
+    "workflow:quick": "node bin/workflow-all.js --no-personas",
+    "workflow:form": "npm run generate-form && npm run validate-form",
+    "workflow:full": "npm run derive-inputs && npm run workflow:form && npm run generate-docs"
   },
   "keywords": [],
   "author": "",

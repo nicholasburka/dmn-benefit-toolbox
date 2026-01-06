@@ -1,0 +1,76 @@
+name: Validate Auto Input Derivation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'library-api/src/main/resources/**/*.dmn'
+      - 'library-api/schemas/**'
+      - 'library-api/lib/**'
+      - 'library-api/bin/**'
+      - '.github/workflows/validate-auto-inputs.yml'
+  pull_request:
+    paths:
+      - 'library-api/src/main/resources/**/*.dmn'
+      - 'library-api/schemas/**'
+      - 'library-api/lib/**'
+      - 'library-api/bin/**'
+      - '.github/workflows/validate-auto-inputs.yml'
+
+jobs:
+  validate:
+    name: Validate Input Schemas
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: library-api
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: library-api/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run auto input derivation workflow
+        run: npm run workflow:quick
+        continue-on-error: false
+
+      - name: Check for schema changes
+        id: check_changes
+        run: |
+          git diff --exit-code schemas/ || echo "schemas_changed=true" >> $GITHUB_OUTPUT
+
+      - name: Show schema differences
+        if: steps.check_changes.outputs.schemas_changed == 'true'
+        run: |
+          echo "❌ Generated schemas differ from committed versions"
+          echo ""
+          echo "The following files have changes:"
+          git diff --name-only schemas/
+          echo ""
+          echo "Run 'npm run workflow' to regenerate schemas and commit the changes."
+          exit 1
+
+      - name: Schemas are in sync
+        if: steps.check_changes.outputs.schemas_changed != 'true'
+        run: |
+          echo "✅ All schemas are in sync with DMN files"
+
+      - name: Upload generated artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-schemas
+          path: |
+            library-api/schemas/
+            library-api/docs/
+          retention-days: 7

@@ -196,6 +196,41 @@ Use this to:
 - Document input requirements
 - Validate that forms collect all necessary data
 
+### Persona Testing
+
+Automatically generate and test realistic eligibility scenarios:
+
+```bash
+# Generate test personas for a benefit
+npm run generate-personas
+
+# Run tests against the API
+npm run test-personas
+```
+
+**What it does:**
+- Generates 10 test personas covering eligible, ineligible, and edge cases
+- Each persona includes expected results for all eligibility checks
+- Test runner validates API responses match expected results
+- Detailed diff reporting when tests fail
+
+**Personas include:**
+- Eligible scenarios (minimal requirements, with income)
+- Ineligible scenarios (income too high, resources too high, citizenship, residence, age)
+- Edge cases (boundary age, boundary resources, blind under 65)
+
+**Example output:**
+```
+Testing SsiEligibility
+✅ PASS: SsiEligibility - Eligible Minimal
+✅ PASS: SsiEligibility - Eligible With Income
+❌ FAIL: SsiEligibility - Ineligible Income Too High
+   Differences:
+   - isEligible: expected false, got true
+
+Summary: 9/10 passed (90.0%)
+```
+
 ### Debugging
 
 - **Endpoint missing?** Check Decision Service name matches `{ModelName}Service` pattern

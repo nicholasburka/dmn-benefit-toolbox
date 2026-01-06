@@ -1,0 +1,136 @@
+{
+  "type": "default",
+  "id": "SsiEligibilityForm",
+  "title": "Ssi Eligibility",
+  "description": "Eligibility screening form for Ssi Eligibility",
+  "components": [
+    {
+      "type": "group",
+      "id": "person",
+      "label": "Personal Information",
+      "components": [
+        {
+          "type": "date",
+          "id": "dateOfBirth",
+          "label": "Date Of Birth",
+          "validate": {
+            "required": false
+          },
+          "description": "Your date of birth (MM/DD/YYYY)"
+        },
+        {
+          "type": "checkbox",
+          "id": "isBlindOrDisabled",
+          "label": "Is Blind Or Disabled",
+          "validate": {
+            "required": false
+          },
+          "description": "Check if you are blind or have a qualifying disability"
+        },
+        {
+          "type": "textfield",
+          "id": "citizenshipStatus",
+          "label": "Citizenship Status",
+          "validate": {
+            "required": false
+          },
+          "description": "Your citizenship or immigration status"
+        },
+        {
+          "type": "date",
+          "id": "refugeeAdmissionDate",
+          "label": "Refugee Admission Date",
+          "validate": {
+            "required": false
+          },
+          "description": "Date you were admitted as a refugee"
+        },
+        {
+          "type": "date",
+          "id": "asylumGrantDate",
+          "label": "Asylum Grant Date",
+          "validate": {
+            "required": false
+          },
+          "description": "Date you were granted asylum"
+        },
+        {
+          "type": "textfield",
+          "id": "residenceState",
+          "label": "Residence State",
+          "validate": {
+            "required": false
+          },
+          "description": "The state where you currently reside"
+        },
+        {
+          "type": "number",
+          "id": "countableResources",
+          "label": "Countable Resources",
+          "validate": {
+            "required": false
+          },
+          "description": "Total value of your countable resources (savings, property, etc.)"
+        },
+        {
+          "type": "dynamiclist",
+          "id": "incomeSources",
+          "label": "Income Sources",
+          "description": "All sources of income (earned and unearned)",
+          "components": [
+            {
+              "type": "textfield",
+              "id": "id",
+              "label": "ID",
+              "validate": {
+                "required": false
+              }
+            },
+            {
+              "type": "textfield",
+              "id": "type",
+              "label": "Type",
+              "validate": {
+                "required": false
+              }
+            },
+            {
+              "type": "textfield",
+              "id": "category",
+              "label": "Category",
+              "validate": {
+                "required": false
+              }
+            },
+            {
+              "type": "number",
+              "id": "monthlyAmount",
+              "label": "Monthly Amount",
+              "validate": {
+                "required": false
+              },
+              "description": "Monthly income amount in dollars"
+            },
+            {
+              "type": "textfield",
+              "id": "description",
+              "label": "Description",
+              "validate": {
+                "required": false
+              }
+            },
+            {
+              "type": "checkbox",
+              "id": "isInfrequentOrIrregular",
+              "label": "Is Infrequent Or Irregular",
+              "validate": {
+                "required": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 9
+}

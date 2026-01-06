@@ -1,0 +1,29 @@
+{
+  "name": "SsiEligibility - Edge Case Blind Under 65",
+  "description": "Edge case: under 65 but blind/disabled",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1980-08-30",
+        "isBlindOrDisabled": true,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "CO",
+        "countableResources": 1200,
+        "incomeSources": []
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": true,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}

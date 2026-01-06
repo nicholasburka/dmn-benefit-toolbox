@@ -1,0 +1,46 @@
+{
+  "name": "SsiEligibility - Ineligible Income Too High",
+  "description": "Fails income check: countable income exceeds FBR",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1958-03-20",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "NY",
+        "countableResources": 1200,
+        "incomeSources": [
+          {
+            "id": "income1",
+            "type": "unearned",
+            "category": "pension",
+            "monthlyAmount": 600,
+            "description": "Pension",
+            "isInfrequentOrIrregular": false
+          },
+          {
+            "id": "income2",
+            "type": "earned",
+            "category": "wages",
+            "monthlyAmount": 1500,
+            "description": "Part-time consulting",
+            "isInfrequentOrIrregular": false
+          }
+        ]
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": false,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": false
+    }
+  }
+}

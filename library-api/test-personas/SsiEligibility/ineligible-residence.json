@@ -1,0 +1,29 @@
+{
+  "name": "SsiEligibility - Ineligible Residence",
+  "description": "Fails residence check: lives in excluded territory",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1952-09-14",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "PR",
+        "countableResources": 1000,
+        "incomeSources": []
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": false,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": false,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}

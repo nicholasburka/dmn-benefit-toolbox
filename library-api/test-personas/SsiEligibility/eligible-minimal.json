@@ -1,0 +1,29 @@
+{
+  "name": "SsiEligibility - Eligible Minimal",
+  "description": "Bare minimum to be eligible: Age 65+, US citizen, low income/resources",
+  "situation": {
+    "primaryPersonId": "p1",
+    "evaluationDate": "2026-01-05",
+    "people": [
+      {
+        "id": "p1",
+        "dateOfBirth": "1950-01-01",
+        "isBlindOrDisabled": false,
+        "citizenshipStatus": "us_citizen",
+        "residenceState": "PA",
+        "countableResources": 1500,
+        "incomeSources": []
+      }
+    ]
+  },
+  "expectedResult": {
+    "isEligible": true,
+    "checks": {
+      "categoricalEligible": true,
+      "citizenshipEligible": true,
+      "residenceEligible": true,
+      "resourceEligible": true,
+      "incomeEligible": true
+    }
+  }
+}
