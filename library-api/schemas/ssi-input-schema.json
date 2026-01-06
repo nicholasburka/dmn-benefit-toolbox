@@ -1,0 +1,109 @@
+{
+  "benefit": "SsiEligibility",
+  "version": "1.0.0",
+  "generatedAt": "2026-01-06T03:36:24.285Z",
+  "sourceDmnFile": "src/main/resources/benefits/federal/ssi-eligibility.dmn",
+  "requiredInputs": {
+    "person": {
+      "dateOfBirth": {
+        "type": "date",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "isBlindOrDisabled": {
+        "type": "boolean",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "citizenshipStatus": {
+        "type": "string",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "refugeeAdmissionDate": {
+        "type": "date",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "asylumGrantDate": {
+        "type": "date",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "residenceState": {
+        "type": "string",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "countableResources": {
+        "type": "number",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "incomeSources": {
+        "type": "tIncomeSourceList",
+        "required": false,
+        "isCollection": true,
+        "itemType": "tIncomeSource",
+        "fields": {
+          "id": {
+            "type": "string",
+            "isCollection": false,
+            "primitive": true
+          },
+          "type": {
+            "type": "string",
+            "isCollection": false,
+            "primitive": true
+          },
+          "category": {
+            "type": "string",
+            "isCollection": false,
+            "primitive": true
+          },
+          "monthlyAmount": {
+            "type": "number",
+            "isCollection": false,
+            "primitive": true
+          },
+          "description": {
+            "type": "string",
+            "isCollection": false,
+            "primitive": true
+          },
+          "isInfrequentOrIrregular": {
+            "type": "boolean",
+            "isCollection": false,
+            "primitive": true
+          }
+        }
+      }
+    },
+    "situation": {
+      "primaryPersonId": {
+        "type": "string",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "evaluationDate": {
+        "type": "date",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      }
+    }
+  },
+  "_metadata": {
+    "totalDmnFiles": 22,
+    "personFieldCount": 8,
+    "situationFieldCount": 2
+  }
+}

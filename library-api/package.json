@@ -1,0 +1,22 @@
+{
+  "name": "library-api",
+  "version": "1.0.0",
+  "description": "A Quarkus application that automatically generates REST APIs from DMN (Decision Model and Notation) files. **DMN files are \"source code\" for JSON web APIs**—add a DMN file, get a REST endpoint.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "derive-inputs": "node bin/derive-inputs.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^14.0.2",
+    "xmldom": "^0.6.0",
+    "xpath": "^0.0.34"
+  }
+}

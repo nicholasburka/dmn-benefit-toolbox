@@ -145,6 +145,57 @@ DMN changes are picked up automatically:
 
 Java changes require restart.
 
+### Auto Input Derivation
+
+Automatically derive required inputs from your DMN files to keep forms and documentation in sync with business logic:
+
+```bash
+# Derive inputs for a benefit
+npm run derive-inputs -- src/main/resources/benefits/federal/ssi-eligibility.dmn
+
+# Custom output path
+npm run derive-inputs -- src/main/resources/benefits/federal/ssi-eligibility.dmn --output schemas/ssi-inputs.json
+```
+
+This generates a JSON schema showing:
+- All person fields referenced in FEEL expressions
+- All situation fields used
+- Field types resolved from BDT.dmn
+- Nested structures for complex types
+
+**Example output:**
+```json
+{
+  "benefit": "SsiEligibility",
+  "requiredInputs": {
+    "person": {
+      "dateOfBirth": {
+        "type": "date",
+        "required": false,
+        "isCollection": false,
+        "primitive": true
+      },
+      "incomeSources": {
+        "type": "tIncomeSourceList",
+        "isCollection": true,
+        "itemType": "tIncomeSource",
+        "fields": { ... }
+      }
+    },
+    "situation": {
+      "primaryPersonId": { ... },
+      "evaluationDate": { ... }
+    }
+  }
+}
+```
+
+Use this to:
+- Generate form schemas automatically
+- Create test personas
+- Document input requirements
+- Validate that forms collect all necessary data
+
 ### Debugging
 
 - **Endpoint missing?** Check Decision Service name matches `{ModelName}Service` pattern
