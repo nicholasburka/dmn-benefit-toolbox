@@ -57,6 +57,61 @@
     <dmn:itemComponent id="_9A8B7C6D-5E4F-3A2B-1C9D-8E7F6A5B4C3D" name="countableResources" isCollection="false">
       <dmn:typeRef>number</dmn:typeRef>
     </dmn:itemComponent>
+    <dmn:itemComponent id="_1F2E3D4C-5B6A-7980-1234-567890ABCDEF" name="incomeSources" isCollection="false">
+      <dmn:typeRef>tIncomeSourceList</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_2A3B4C5D-6E7F-8091-2345-6789ABCDEF01" name="tIncomeSource" isCollection="false">
+    <dmn:itemComponent id="_3B4C5D6E-7F80-9123-4567-89ABCDEF0123" name="id" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_4C5D6E7F-8091-2345-6789-ABCDEF012345" name="type" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_5D6E7F80-9123-4567-89AB-CDEF01234567" name="category" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_6E7F8091-2345-6789-ABCD-EF0123456789" name="monthlyAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_7F809123-4567-89AB-CDEF-012345678901" name="description" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_80912345-6789-ABCD-EF01-234567890123" name="isInfrequentOrIrregular" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_91234567-89AB-CDEF-0123-456789ABCDEF" name="tIncomeSourceList" isCollection="true">
+    <dmn:typeRef>tIncomeSource</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_A2345678-9ABC-DEF0-1234-56789ABCDEF0" name="tIncomeCalculation" isCollection="false">
+    <dmn:itemComponent id="_B3456789-ABCD-EF01-2345-6789ABCDEF01" name="totalEarnedIncome" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_C456789A-BCDE-F012-3456-789ABCDEF012" name="totalUnearnedIncome" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_D56789AB-CDEF-0123-4567-89ABCDEF0123" name="generalExclusionApplied" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_E6789ABC-DEF0-1234-5678-9ABCDEF01234" name="earnedIncomeExclusionApplied" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_F789ABCD-EF01-2345-6789-ABCDEF012345" name="countableUnearnedIncome" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_089ABCDE-F012-3456-789A-BCDEF0123456" name="countableEarnedIncome" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_19ABCDEF-0123-4567-89AB-CDEF01234567" name="totalCountableIncome" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_2ABCDEF0-1234-5678-9ABC-DEF012345678" name="applicableFBR" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_3BCDEF01-2345-6789-ABCD-EF0123456789" name="meetsIncomeLimit" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
   </dmn:itemDefinition>
   <dmn:itemDefinition id="_63571AF5-6B52-436F-9BED-0A9A14CE87A4" name="tPersonList" isCollection="true">
     <dmn:typeRef>tPerson</dmn:typeRef>

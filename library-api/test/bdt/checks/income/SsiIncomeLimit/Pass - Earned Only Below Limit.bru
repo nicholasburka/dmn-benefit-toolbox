@@ -1,0 +1,47 @@
+meta {
+  name: Pass - Earned Only Below Limit
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/checks/income/ssi-income-limit
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "incomeSources": [
+            {
+              "id": "income1",
+              "type": "earned",
+              "category": "wages",
+              "monthlyAmount": 1000,
+              "description": "Part-time wages",
+              "isInfrequentOrIrregular": false
+            }
+          ]
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1",
+      "FBR": 967
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

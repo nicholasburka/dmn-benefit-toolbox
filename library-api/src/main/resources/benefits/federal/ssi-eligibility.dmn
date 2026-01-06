@@ -18,12 +18,12 @@
 
   <dmn:description>SSI Eligibility Screener - Composes all SSI eligibility requirements per POMS SI 00501.000
 
-Current implementation status:
+Current implementation status: ALL 5 CORE REQUIREMENTS IMPLEMENTED ✓
 - Categorical eligibility (age 65+ OR blind OR disabled): IMPLEMENTED
 - Citizenship eligibility (U.S. citizen OR qualified alien): IMPLEMENTED
 - Residence requirement (resides in 50 states, DC, or Northern Mariana Islands): IMPLEMENTED
-- Resource limits (countable resources &lt; $2,000 individual): IMPLEMENTED
-- Income limits (countable income &lt; FBR): NOT YET IMPLEMENTED
+- Resource limits (countable resources &lt; $2,000 individual): IMPLEMENTED (SIMPLIFIED)
+- Income limits (countable income &lt; FBR with POMS exclusions): IMPLEMENTED ✓
 
 Per POMS SI 00501.001, an individual is eligible for SSI if they meet ALL of the following:
 1. Categorical requirement (age 65+, blind, or disabled)
@@ -32,7 +32,7 @@ Per POMS SI 00501.001, an individual is eligible for SSI if they meet ALL of the
 4. Income limit (countable income below Federal Benefit Rate)
 5. Resource limit (countable resources below statutory limit)
 
-This benefit will be extended as additional eligibility checks are implemented.</dmn:description>
+Future enhancements: Couple limits, full resource exclusions, student earned income exclusion, PASS, deeming, etc.</dmn:description>
 
   <dmn:extensionElements/>
 
@@ -84,6 +84,14 @@ This benefit will be extended as additional eligibility checks are implemented.<
     locationURI="../../checks/resources/ssi-resource-limit.dmn"
     importType="http://www.omg.org/spec/DMN/20180521/MODEL/"/>
 
+  <!-- Import SsiIncomeLimit -->
+  <dmn:import
+    id="_import_income"
+    name="SsiIncomeLimit"
+    namespace="https://kie.apache.org/dmn/_7E8F9A0B-1C2D-3E4F-5A6B-7C8D9E0F1A2B"
+    locationURI="../../checks/income/ssi-income-limit.dmn"
+    importType="http://www.omg.org/spec/DMN/20180521/MODEL/"/>
+
   <!-- Decision Service -->
   <dmn:decisionService id="_service" name="SsiEligibilityService">
     <dmn:extensionElements/>
@@ -118,6 +126,9 @@ This benefit will be extended as additional eligibility checks are implemented.<
     </dmn:knowledgeRequirement>
     <dmn:knowledgeRequirement id="_checks_kr_resource">
       <dmn:requiredKnowledge href="https://kie.apache.org/dmn/_C471DC1E-D0A3-4C2A-B270-834758321D16#_C6D7E8F9-0A1B-2C3D-4E5F-6A7B8C9D0E1F"/>
+    </dmn:knowledgeRequirement>
+    <dmn:knowledgeRequirement id="_checks_kr_income">
+      <dmn:requiredKnowledge href="https://kie.apache.org/dmn/_7E8F9A0B-1C2D-3E4F-5A6B-7C8D9E0F1A2B#_F3A4B5C6-7D8E-9F0A-1B2C-3D4E5F6A7B8C"/>
     </dmn:knowledgeRequirement>
     <dmn:context id="_checks_context">
       <!-- Categorical eligibility check -->
@@ -230,21 +241,53 @@ This benefit will be extended as additional eligibility checks are implemented.<
           </dmn:binding>
         </dmn:invocation>
       </dmn:contextEntry>
+      <!-- Income eligibility check -->
+      <dmn:contextEntry>
+        <dmn:variable id="_var_income" name="incomeEligible" typeRef="boolean"/>
+        <dmn:invocation id="_invoke_income">
+          <dmn:literalExpression id="_invoke_income_expr">
+            <dmn:text>SsiIncomeLimit.SsiIncomeLimitService</dmn:text>
+          </dmn:literalExpression>
+          <dmn:binding>
+            <dmn:parameter id="_param_income_situation" name="situation" typeRef="BDT.tSituation"/>
+            <dmn:literalExpression id="_bind_income_situation">
+              <dmn:text>situation</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+          <dmn:binding>
+            <dmn:parameter id="_param_income_parameters" name="parameters" typeRef="SsiIncomeLimit.tParameters"/>
+            <dmn:context id="_bind_income_parameters">
+              <dmn:contextEntry>
+                <dmn:variable id="_param_income_personId" name="personId" typeRef="string"/>
+                <dmn:literalExpression id="_param_income_personId_expr">
+                  <dmn:text>situation.primaryPersonId</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
+              <dmn:contextEntry>
+                <dmn:variable id="_param_income_fbr" name="FBR" typeRef="number"/>
+                <dmn:literalExpression id="_param_income_fbr_expr">
+                  <dmn:text>967</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
+            </dmn:context>
+          </dmn:binding>
+        </dmn:invocation>
+      </dmn:contextEntry>
     </dmn:context>
   </dmn:decision>
 
   <!-- Decision: isEligible -->
   <dmn:decision id="_isEligible" name="isEligible">
-    <dmn:description>Returns true if ALL implemented eligibility requirements are met
+    <dmn:description>Returns true if ALL 5 core eligibility requirements are met (POMS SI 00501.001)
 
-Currently checks:
+All core checks implemented:
 - Categorical eligibility (age 65+ OR blind OR disabled)
 - Citizenship eligibility (U.S. citizen OR qualified alien)
 - Residence eligibility (resides in 50 states, DC, or Northern Mariana Islands)
-- Resource eligibility (countable resources &lt; $2,000 for individuals)
+- Resource eligibility (countable resources &lt; $2,000 for individuals) - SIMPLIFIED
+- Income eligibility (countable income &lt; FBR $967 with POMS exclusions) - IMPLEMENTED
 
-Future checks (not yet implemented):
-- Income eligibility</dmn:description>
+Future enhancements: Couple limits, full resource exclusions, SEIE, PASS, deeming</dmn:description>
     <dmn:extensionElements/>
     <dmn:variable id="_isEligible_var" name="isEligible" typeRef="boolean"/>
     <dmn:informationRequirement id="_isEligible_req_checks">

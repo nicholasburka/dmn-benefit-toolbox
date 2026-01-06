@@ -1,0 +1,55 @@
+meta {
+  name: Pass - Mixed Income Below Limit
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/checks/income/ssi-income-limit
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "situation": {
+      "people": [
+        {
+          "id": "p1",
+          "incomeSources": [
+            {
+              "id": "income1",
+              "type": "unearned",
+              "category": "social_security",
+              "monthlyAmount": 200,
+              "description": "Social Security",
+              "isInfrequentOrIrregular": false
+            },
+            {
+              "id": "income2",
+              "type": "earned",
+              "category": "wages",
+              "monthlyAmount": 1000,
+              "description": "Part-time wages",
+              "isInfrequentOrIrregular": false
+            }
+          ]
+        }
+      ]
+    },
+    "parameters": {
+      "personId": "p1",
+      "FBR": 967
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.checkResult: eq true
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

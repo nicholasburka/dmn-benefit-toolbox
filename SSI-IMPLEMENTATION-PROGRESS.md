@@ -4,7 +4,7 @@
 
 Implementing a complete SSI (Supplemental Security Income) eligibility screener following POMS SI 00501.000 and related policy sections.
 
-**Current Status**: 4 of 5 core eligibility requirements implemented
+**Current Status**: ✅ ALL 5 OF 5 CORE ELIGIBILITY REQUIREMENTS IMPLEMENTED!
 
 ---
 
@@ -58,31 +58,40 @@ Implementing a complete SSI (Supplemental Security Income) eligibility screener 
   - This works for screening/awareness but not for accurate eligibility determination
   - **See SSI-RESOURCE-LIMITS-PLAN.md for full implementation plan**
 
----
-
-### 🚧 NOT YET IMPLEMENTED
-
 #### 5. Income Limits (POMS SI 00810.000 - SI 00830.000)
-- **Status**: ❌ Not Started
+- **Status**: ✅ Implemented
+- **Location**: `library-api/src/main/resources/checks/income/`
+- **Files**:
+  - `Income.dmn` - Base module with shared BKMs
+  - `calculate-countable-income.dmn` - Core POMS-compliant calculation logic
+  - `ssi-income-limit.dmn` - Wrapper check (returns boolean)
+- **Logic**:
+  - Earned vs. unearned income tracking
+  - $20 general exclusion applied to unearned first
+  - Spillover of unused $20 general exclusion to earned income
+  - $65 earned income exclusion
+  - 50% of remaining earned income excluded
+  - Compares total countable income to FBR ($967 individual, $1,450 couple)
+- **Tests**: Bruno tests in `test/bdt/checks/income/SsiIncomeLimit/`
+- **Form Fields**: `incomeSources` (list of tIncomeSource with type, category, monthlyAmount, etc.)
 - **POMS References**:
   - SI 00810.000 - Overview of Income
-  - SI 00815.000 - Earned Income
+  - SI 00810.420 - $20 General Income Exclusion
+  - SI 00820.500 - Earned Income Exclusions
   - SI 00830.000 - Unearned Income
-  - SI 01110.000 - Income Exclusions
-  - SI 01120.000 - Income Deductions
-- **Key Concepts**:
-  - Federal Benefit Rate (FBR) - changes annually
-  - Countable income = Total income - Exclusions - Deductions
-  - Different rules for earned vs. unearned income
-  - Earned income exclusions: $65 + $20 general + 50% of remainder
-  - Unearned income exclusion: $20 general
 - **Implementation Notes**:
-  - Need to model income sources (earned/unearned)
-  - Apply exclusions in correct order
-  - Calculate countable income
-  - Compare to FBR
-  - Handle state supplements
-- **Complexity**: HIGH (complex calculation logic, many exception cases)
+  - Uses tIncomeSource, tIncomeSourceList, tIncomeCalculation types in BDT.dmn
+  - Exclusions applied in correct POMS order
+  - Returns detailed tIncomeCalculation with all intermediary values
+  - FBR configurable via parameters (defaults to $967 individual)
+- **Current Limitations**:
+  - Does not yet implement advanced exclusions (SEIE, PASS, IRWE, etc.)
+  - Individual limit only (couple logic can be added via parameters)
+  - See deferred enhancements below for future work
+
+---
+
+### 🚧 NOT YET IMPLEMENTED (Future Enhancements)
 
 ---
 
@@ -225,5 +234,6 @@ builder-frontend/src/components/ssi-screener/
 
 ---
 
-**Last Updated**: 2026-01-03
-**Current Sprint**: Core eligibility requirements (4 of 5 complete - Income Limits remaining)
+**Last Updated**: 2026-01-05
+**Current Sprint**: ✅ COMPLETED! All 5 core eligibility requirements implemented
+**Next Steps**: Consider implementing full resource exclusions OR enhanced income exclusions (SEIE, PASS, etc.)
