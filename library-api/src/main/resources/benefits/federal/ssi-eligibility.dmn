@@ -18,12 +18,13 @@
 
   <dmn:description>SSI Eligibility Screener - Composes all SSI eligibility requirements per POMS SI 00501.000
 
-Current implementation status: ALL 5 CORE REQUIREMENTS IMPLEMENTED ✓
+Current implementation status: ALL 5 CORE REQUIREMENTS IMPLEMENTED ✓ + COUPLE SUPPORT ✓
 - Categorical eligibility (age 65+ OR blind OR disabled): IMPLEMENTED
 - Citizenship eligibility (U.S. citizen OR qualified alien): IMPLEMENTED
 - Residence requirement (resides in 50 states, DC, or Northern Mariana Islands): IMPLEMENTED
-- Resource limits (countable resources &lt; $2,000 individual): IMPLEMENTED (SIMPLIFIED)
-- Income limits (countable income &lt; FBR with POMS exclusions): IMPLEMENTED ✓
+- Resource limits: IMPLEMENTED (Individual: $2,000, Couple: $3,000 per POMS SI 01110.003)
+- Income limits: IMPLEMENTED (Individual FBR: $967, Couple FBR: $1,450 per POMS SI 00810.010)
+- Couple eligibility: IMPLEMENTED (both members must meet categorical and citizenship requirements)
 
 Per POMS SI 00501.001, an individual is eligible for SSI if they meet ALL of the following:
 1. Categorical requirement (age 65+, blind, or disabled)
@@ -32,7 +33,10 @@ Per POMS SI 00501.001, an individual is eligible for SSI if they meet ALL of the
 4. Income limit (countable income below Federal Benefit Rate)
 5. Resource limit (countable resources below statutory limit)
 
-Future enhancements: Couple limits, full resource exclusions, student earned income exclusion, PASS, deeming, etc.</dmn:description>
+For eligible couples (POMS SI 00501.010), both members must meet categorical and citizenship requirements,
+and higher limits apply for income and resources.
+
+Future enhancements: Full resource exclusions, student earned income exclusion, PASS, deeming, etc.</dmn:description>
 
   <dmn:extensionElements/>
 
@@ -131,6 +135,14 @@ Future enhancements: Couple limits, full resource exclusions, student earned inc
       <dmn:requiredKnowledge href="https://kie.apache.org/dmn/_7E8F9A0B-1C2D-3E4F-5A6B-7C8D9E0F1A2B#_F3A4B5C6-7D8E-9F0A-1B2C-3D4E5F6A7B8C"/>
     </dmn:knowledgeRequirement>
     <dmn:context id="_checks_context">
+      <!-- Step 1: Detect spouse and couple status -->
+      <dmn:contextEntry>
+        <dmn:variable id="_var_spouseId" name="spouseId" typeRef="string"/>
+        <dmn:literalExpression id="_expr_spouseId">
+          <dmn:text>situation.relationships[item.personId = situation.primaryPersonId and item.type = "spouse"][1].relatedPersonId</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+
       <!-- Categorical eligibility check -->
       <dmn:contextEntry>
         <dmn:variable id="_var_categorical" name="categoricalEligible" typeRef="boolean"/>
@@ -189,6 +201,74 @@ Future enhancements: Couple limits, full resource exclusions, student earned inc
           </dmn:binding>
         </dmn:invocation>
       </dmn:contextEntry>
+      <!-- Spouse categorical eligibility check (if spouse exists) -->
+      <dmn:contextEntry>
+        <dmn:variable id="_var_spouse_categorical" name="spouseCategoricalEligible" typeRef="boolean"/>
+        <dmn:invocation id="_invoke_spouse_categorical">
+          <dmn:literalExpression id="_invoke_spouse_categorical_expr">
+            <dmn:text>CategoricalEligibility.CategoricalEligibilityService</dmn:text>
+          </dmn:literalExpression>
+          <dmn:binding>
+            <dmn:parameter id="_param_spouse_categorical_situation" name="situation" typeRef="BDT.tSituation"/>
+            <dmn:literalExpression id="_bind_spouse_categorical_situation">
+              <dmn:text>situation</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+          <dmn:binding>
+            <dmn:parameter id="_param_spouse_categorical_parameters" name="parameters" typeRef="CategoricalEligibility.tParameters"/>
+            <dmn:context id="_bind_spouse_categorical_parameters">
+              <dmn:contextEntry>
+                <dmn:variable id="_param_spouse_categorical_personId" name="personId" typeRef="string"/>
+                <dmn:literalExpression id="_param_spouse_categorical_personId_expr">
+                  <dmn:text>spouseId</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
+              <dmn:contextEntry>
+                <dmn:variable id="_param_spouse_categorical_asOfDate" name="asOfDate" typeRef="date"/>
+                <dmn:literalExpression id="_param_spouse_categorical_asOfDate_expr">
+                  <dmn:text>situation.evaluationDate</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
+            </dmn:context>
+          </dmn:binding>
+        </dmn:invocation>
+      </dmn:contextEntry>
+      <!-- Spouse citizenship eligibility check (if spouse exists) -->
+      <dmn:contextEntry>
+        <dmn:variable id="_var_spouse_citizenship" name="spouseCitizenshipEligible" typeRef="boolean"/>
+        <dmn:invocation id="_invoke_spouse_citizenship">
+          <dmn:literalExpression id="_invoke_spouse_citizenship_expr">
+            <dmn:text>CitizenshipEligibility.CitizenshipEligibilityService</dmn:text>
+          </dmn:literalExpression>
+          <dmn:binding>
+            <dmn:parameter id="_param_spouse_citizenship_situation" name="situation" typeRef="BDT.tSituation"/>
+            <dmn:literalExpression id="_bind_spouse_citizenship_situation">
+              <dmn:text>situation</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+          <dmn:binding>
+            <dmn:parameter id="_param_spouse_citizenship_parameters" name="parameters" typeRef="CitizenshipEligibility.tParameters"/>
+            <dmn:context id="_bind_spouse_citizenship_parameters">
+              <dmn:contextEntry>
+                <dmn:variable id="_param_spouse_citizenship_personId" name="personId" typeRef="string"/>
+                <dmn:literalExpression id="_param_spouse_citizenship_personId_expr">
+                  <dmn:text>spouseId</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
+            </dmn:context>
+          </dmn:binding>
+        </dmn:invocation>
+      </dmn:contextEntry>
+      <!-- Determine if this is an eligible couple -->
+      <dmn:contextEntry>
+        <dmn:variable id="_var_isCouple" name="isCouple" typeRef="boolean"/>
+        <dmn:literalExpression id="_expr_isCouple">
+          <dmn:text>if spouseId = null then
+  false
+else
+  categoricalEligible = true and citizenshipEligible = true and spouseCategoricalEligible = true and spouseCitizenshipEligible = true</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
       <!-- Residence eligibility check -->
       <dmn:contextEntry>
         <dmn:variable id="_var_residence" name="residenceEligible" typeRef="boolean"/>
@@ -237,6 +317,12 @@ Future enhancements: Couple limits, full resource exclusions, student earned inc
                   <dmn:text>situation.primaryPersonId</dmn:text>
                 </dmn:literalExpression>
               </dmn:contextEntry>
+              <dmn:contextEntry>
+                <dmn:variable id="_param_resource_isCouple" name="isCouple" typeRef="boolean"/>
+                <dmn:literalExpression id="_param_resource_isCouple_expr">
+                  <dmn:text>isCouple</dmn:text>
+                </dmn:literalExpression>
+              </dmn:contextEntry>
             </dmn:context>
           </dmn:binding>
         </dmn:invocation>
@@ -264,9 +350,9 @@ Future enhancements: Couple limits, full resource exclusions, student earned inc
                 </dmn:literalExpression>
               </dmn:contextEntry>
               <dmn:contextEntry>
-                <dmn:variable id="_param_income_fbr" name="FBR" typeRef="number"/>
-                <dmn:literalExpression id="_param_income_fbr_expr">
-                  <dmn:text>967</dmn:text>
+                <dmn:variable id="_param_income_isCouple" name="isCouple" typeRef="boolean"/>
+                <dmn:literalExpression id="_param_income_isCouple_expr">
+                  <dmn:text>isCouple</dmn:text>
                 </dmn:literalExpression>
               </dmn:contextEntry>
             </dmn:context>
@@ -294,11 +380,11 @@ Future enhancements: Couple limits, full resource exclusions, SEIE, PASS, deemin
       <dmn:requiredDecision href="#_checks"/>
     </dmn:informationRequirement>
     <dmn:context id="_isEligible_context">
-      <!-- Convert checks context to list -->
+      <!-- Build list of actual check results (excluding helper fields) -->
       <dmn:contextEntry>
         <dmn:variable id="_var_checksAsList" name="checksAsList" typeRef="BDT.tBooleanList"/>
         <dmn:literalExpression id="_expr_checksAsList">
-          <dmn:text>for check in (get entries(checks)) return check.value</dmn:text>
+          <dmn:text>[checks.categoricalEligible, checks.citizenshipEligible, checks.residenceEligible, checks.resourceEligible, checks.incomeEligible]</dmn:text>
         </dmn:literalExpression>
       </dmn:contextEntry>
       <!-- Evaluate all checks -->

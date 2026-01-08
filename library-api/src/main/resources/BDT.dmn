@@ -246,6 +246,27 @@
       </dmn:context>
     </dmn:encapsulatedLogic>
   </dmn:businessKnowledgeModel>
+  <dmn:businessKnowledgeModel id="_A1B2C3D4-E5F6-4789-ABCD-EF0123456789" name="has eligible spouse">
+    <dmn:extensionElements/>
+    <dmn:variable id="_B2C3D4E5-F6A7-4890-BCDE-F01234567890" name="has eligible spouse" typeRef="boolean"/>
+    <dmn:encapsulatedLogic id="_C3D4E5F6-A7B8-4901-CDEF-012345678901" kind="FEEL">
+      <dmn:formalParameter id="_D4E5F6A7-B8C9-4012-DEF0-123456789012" name="situation" typeRef="tSituation"/>
+      <dmn:formalParameter id="_E5F6A7B8-C9D0-4123-EF01-234567890123" name="personId" typeRef="string"/>
+      <dmn:context id="_F6A7B8C9-D0E1-4234-F012-345678901234">
+        <dmn:contextEntry>
+          <dmn:variable id="_A7B8C9D0-E1F2-4345-0123-456789012345" name="spouseId" typeRef="string"/>
+          <dmn:literalExpression id="_B8C9D0E1-F2A3-4456-1234-567890123456">
+            <dmn:text>spouse id(situation.relationships, personId)</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:literalExpression id="_C9D0E1F2-A3B4-4567-2345-678901234567">
+            <dmn:text>spouseId != null</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+      </dmn:context>
+    </dmn:encapsulatedLogic>
+  </dmn:businessKnowledgeModel>
   <dmn:textAnnotation id="_1586DF76-6FC5-4E6E-B37B-53D30D67E005" textFormat="text/plain">
     <dmn:text>BKMs, data types, and/or Decision Services that will be included in every eligibility check model</dmn:text>
   </dmn:textAnnotation>

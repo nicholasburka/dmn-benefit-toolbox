@@ -20,7 +20,19 @@ body:json {
           "id": "p1",
           "dateOfBirth": "1955-06-15",
           "citizenshipStatus": "US_CITIZEN",
-          "isBlindOrDisabled": false
+          "isBlindOrDisabled": false,
+          "residenceState": "PA",
+          "countableResources": 1500,
+          "incomeSources": [
+            {
+              "id": "inc1",
+              "type": "unearned",
+              "category": "SSA",
+              "monthlyAmount": 800,
+              "description": "Social Security benefits",
+              "isInfrequentOrIrregular": false
+            }
+          ]
         }
       ],
       "enrollments": [],
@@ -34,6 +46,9 @@ assert {
   res.status: eq 200
   res.body.checks.categoricalEligible: eq true
   res.body.checks.citizenshipEligible: eq true
+  res.body.checks.residenceEligible: eq true
+  res.body.checks.resourceEligible: eq true
+  res.body.checks.incomeEligible: eq true
   res.body.isEligible: eq true
 }
 

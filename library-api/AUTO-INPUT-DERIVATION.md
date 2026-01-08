@@ -412,6 +412,22 @@ DMN Files
     └─→ [generate-docs] → INPUTS.md
 ```
 
+## Known Limitations
+
+### Form Preview
+
+The generated form uses builder-frontend's extended Form.js components (like `dynamiclist` for repeatable sections) which are not compatible with standard Form.js libraries.
+
+**❌ Does NOT work:**
+- `schemas/form-preview.html` - Standalone HTML preview has compatibility issues
+
+**✅ Working options:**
+- Import into builder-frontend UI (full component support)
+- View raw JSON schema: `schemas/generated-form.json`
+- Use for builder-frontend form imports (primary use case)
+
+The generated schemas are production-ready for builder-frontend. A standalone preview would require implementing builder-frontend's custom component renderers.
+
 ## Future Enhancements
 
 Potential improvements:
@@ -422,9 +438,10 @@ Potential improvements:
 - [ ] Multi-language documentation generation
 - [ ] Visual DMN → Form.js mapping diagram
 - [ ] Integration with builder-frontend auto-import
+- [ ] Standalone form preview with custom component support
 
 ---
 
 **Version:** 1.0.0
 **Last Updated:** 2026-01-06
-**Status:** Production Ready
+**Status:** Production Ready (HTML preview non-functional)

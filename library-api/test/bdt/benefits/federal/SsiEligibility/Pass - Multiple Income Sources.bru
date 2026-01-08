@@ -1,7 +1,7 @@
 meta {
-  name: Fail - Not Categorical
+  name: Pass - Multiple Income Sources
   type: http
-  seq: 3
+  seq: 9
 }
 
 post {
@@ -18,19 +18,35 @@ body:json {
       "people": [
         {
           "id": "p1",
-          "dateOfBirth": "1990-06-15",
-          "citizenshipStatus": "US_CITIZEN",
+          "dateOfBirth": "1955-06-15",
+          "citizenshipStatus": "NATURALIZED_CITIZEN",
           "isBlindOrDisabled": false,
-          "residenceState": "CA",
-          "countableResources": 1000,
+          "residenceState": "MI",
+          "countableResources": 500,
           "incomeSources": [
             {
               "id": "inc1",
               "type": "unearned",
               "category": "SSA",
-              "monthlyAmount": 500,
+              "monthlyAmount": 600,
               "description": "Social Security benefits",
               "isInfrequentOrIrregular": false
+            },
+            {
+              "id": "inc2",
+              "type": "earned",
+              "category": "wages",
+              "monthlyAmount": 400,
+              "description": "Part-time work",
+              "isInfrequentOrIrregular": false
+            },
+            {
+              "id": "inc3",
+              "type": "unearned",
+              "category": "other",
+              "monthlyAmount": 50,
+              "description": "Interest income",
+              "isInfrequentOrIrregular": true
             }
           ]
         }
@@ -44,12 +60,12 @@ body:json {
 
 assert {
   res.status: eq 200
-  res.body.checks.categoricalEligible: eq false
+  res.body.checks.categoricalEligible: eq true
   res.body.checks.citizenshipEligible: eq true
   res.body.checks.residenceEligible: eq true
   res.body.checks.resourceEligible: eq true
   res.body.checks.incomeEligible: eq true
-  res.body.isEligible: eq false
+  res.body.isEligible: eq true
 }
 
 settings {

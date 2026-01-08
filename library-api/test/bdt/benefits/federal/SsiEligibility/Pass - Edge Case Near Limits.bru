@@ -1,7 +1,7 @@
 meta {
-  name: Fail - Not Categorical
+  name: Pass - Edge Case Near Limits
   type: http
-  seq: 3
+  seq: 8
 }
 
 post {
@@ -18,18 +18,18 @@ body:json {
       "people": [
         {
           "id": "p1",
-          "dateOfBirth": "1990-06-15",
+          "dateOfBirth": "1955-06-15",
           "citizenshipStatus": "US_CITIZEN",
           "isBlindOrDisabled": false,
-          "residenceState": "CA",
-          "countableResources": 1000,
+          "residenceState": "WA",
+          "countableResources": 1999,
           "incomeSources": [
             {
               "id": "inc1",
-              "type": "unearned",
-              "category": "SSA",
-              "monthlyAmount": 500,
-              "description": "Social Security benefits",
+              "type": "earned",
+              "category": "wages",
+              "monthlyAmount": 1900,
+              "description": "Part-time work",
               "isInfrequentOrIrregular": false
             }
           ]
@@ -44,12 +44,12 @@ body:json {
 
 assert {
   res.status: eq 200
-  res.body.checks.categoricalEligible: eq false
+  res.body.checks.categoricalEligible: eq true
   res.body.checks.citizenshipEligible: eq true
   res.body.checks.residenceEligible: eq true
   res.body.checks.resourceEligible: eq true
   res.body.checks.incomeEligible: eq true
-  res.body.isEligible: eq false
+  res.body.isEligible: eq true
 }
 
 settings {

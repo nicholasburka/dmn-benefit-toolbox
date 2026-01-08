@@ -9,10 +9,11 @@
                  typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/"
                  namespace="https://kie.apache.org/dmn/_C471DC1E-D0A3-4C2A-B270-834758321D16">
 
-  <dmn:description>POMS SI 01110.200 - SSI resource limit check: countable resources must be below $2,000 for individuals
+  <dmn:description>POMS SI 01110.003 - SSI resource limit check
+- Individual limit: $2,000
+- Couple limit: $3,000
 
-Current implementation: Simplified version checking individual limit only
-Future enhancement: Support couple limit ($3,000) based on marital status/relationships</dmn:description>
+Countable resources must be below the applicable limit for SSI eligibility</dmn:description>
 
   <!-- Import BDT base module -->
   <dmn:import id="_B7C8D9E0-F1A2-3B4C-5D6E-7F8A9B0C1D2E"
@@ -25,6 +26,9 @@ Future enhancement: Support couple limit ($3,000) based on marital status/relati
   <dmn:itemDefinition id="_C8D9E0F1-2A3B-4C5D-6E7F-8A9B0C1D2E3F" name="tParameters" isCollection="false">
     <dmn:itemComponent id="_D9E0F1A2-3B4C-5D6E-7F8A-9B0C1D2E3F4A" name="personId" isCollection="false">
       <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_E9F0A1B2-4C5D-6E7F-8A9B-0C1D2E3F4A5B" name="isCouple" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
     </dmn:itemComponent>
   </dmn:itemDefinition>
 
@@ -46,7 +50,7 @@ Future enhancement: Support couple limit ($3,000) based on marital status/relati
 
   <!-- Decision: checkResult -->
   <dmn:decision id="_C4D5E6F7-8A9B-0C1D-2E3F-4A5B6C7D8E9F" name="checkResult">
-    <dmn:description>POMS SI 01110.200 - Individual countable resources must be less than $2,000 for SSI eligibility</dmn:description>
+    <dmn:description>POMS SI 01110.003 - Countable resources must be less than limit ($2,000 individual, $3,000 couple)</dmn:description>
     <dmn:extensionElements/>
     <dmn:variable id="_D5E6F7A8-9B0C-1D2E-3F4A-5B6C7D8E9F0A"
                   name="checkResult"
@@ -75,18 +79,26 @@ Future enhancement: Support couple limit ($3,000) based on marital status/relati
         </dmn:literalExpression>
       </dmn:contextEntry>
 
-      <!-- Step 3: Check if resources are below limit -->
+      <!-- Step 3: Determine resource limit based on couple status -->
+      <dmn:contextEntry>
+        <dmn:variable id="_G4A5B6C7-8D9E-0F1A-2B3C-4D5E6F7A8B9C" name="resourceLimit" typeRef="number"/>
+        <dmn:literalExpression id="_H5B6C7D8-9E0F-1A2B-3C4D-5E6F7A8B9C0D">
+          <dmn:text>if parameters.isCouple then 3000 else 2000</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+
+      <!-- Step 4: Check if resources are below limit -->
       <dmn:contextEntry>
         <dmn:variable id="_F3A4B5C6-7D8E-9F0A-1B2C-3D4E5F6A7B8C" name="result" typeRef="boolean"/>
         <dmn:literalExpression id="_A4B5C6D7-8E9F-0A1B-2C3D-4E5F6A7B8C9D">
           <dmn:text>if countableResources = null then
   null
 else
-  countableResources &lt; 2000</dmn:text>
+  countableResources &lt; resourceLimit</dmn:text>
         </dmn:literalExpression>
       </dmn:contextEntry>
 
-      <!-- Step 4: Return result -->
+      <!-- Step 5: Return result -->
       <dmn:contextEntry>
         <dmn:literalExpression id="_B5C6D7E8-9F0A-1B2C-3D4E-5F6A7B8C9D0E">
           <dmn:text>result</dmn:text>

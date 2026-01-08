@@ -1,7 +1,7 @@
 meta {
-  name: Fail - Not Categorical
+  name: Fail - Multiple Checks Failed
   type: http
-  seq: 3
+  seq: 10
 }
 
 post {
@@ -19,17 +19,17 @@ body:json {
         {
           "id": "p1",
           "dateOfBirth": "1990-06-15",
-          "citizenshipStatus": "US_CITIZEN",
+          "citizenshipStatus": "UNDOCUMENTED",
           "isBlindOrDisabled": false,
-          "residenceState": "CA",
-          "countableResources": 1000,
+          "residenceState": "GU",
+          "countableResources": 3000,
           "incomeSources": [
             {
               "id": "inc1",
-              "type": "unearned",
-              "category": "SSA",
-              "monthlyAmount": 500,
-              "description": "Social Security benefits",
+              "type": "earned",
+              "category": "wages",
+              "monthlyAmount": 3000,
+              "description": "Full-time work",
               "isInfrequentOrIrregular": false
             }
           ]
@@ -45,10 +45,10 @@ body:json {
 assert {
   res.status: eq 200
   res.body.checks.categoricalEligible: eq false
-  res.body.checks.citizenshipEligible: eq true
-  res.body.checks.residenceEligible: eq true
-  res.body.checks.resourceEligible: eq true
-  res.body.checks.incomeEligible: eq true
+  res.body.checks.citizenshipEligible: eq false
+  res.body.checks.residenceEligible: eq false
+  res.body.checks.resourceEligible: eq false
+  res.body.checks.incomeEligible: eq false
   res.body.isEligible: eq false
 }
 
